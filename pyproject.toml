@@ -1,7 +1,7 @@
 [project]
-name = "repl-nix-workspace"
+name = "CrewSpawner"
 version = "0.1.0"
-description = "Add your description here"
+description = "Agent Swarms"
 requires-python = ">=3.11"
 dependencies = [
     "anthropic>=0.52.0",
