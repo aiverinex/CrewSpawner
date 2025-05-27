@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta-Crew Spawner - Dynamic AI Crew Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Header -->
+        <header class="row bg-primary text-white py-3 mb-4">
+            <div class="col">
+                <h1 class="mb-0">
+                    <i class="fas fa-users-cog me-2"></i>
+                    Meta-Crew Spawner
+                </h1>
+                <p class="mb-0 opacity-75">Dynamic AI Crew Generator using CrewAI Framework</p>
+            </div>
+        </header>
+
+        <div class="row">
+            <!-- Configuration Panel -->
+            <div class="col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-cog me-2"></i>
+                            Configuration
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- LLM Provider Selection -->
+                        <div class="mb-3">
+                            <label for="llmProvider" class="form-label">LLM Provider</label>
+                            <select class="form-select" id="llmProvider">
+                                <option value="">Select Provider...</option>
+                                {% for provider in providers %}
+                                <option value="{{ provider.name }}" 
+                                        {% if not provider.available %}disabled{% endif %}>
+                                    {{ provider.name|title }}
+                                    {% if not provider.available %} (Not Available){% endif %}
+                                </option>
+                                {% endfor %}
+                            </select>
+                            <div class="form-text">Choose your preferred LLM provider</div>
+                        </div>
+
+                        <!-- Model Selection -->
+                        <div class="mb-3">
+                            <label for="llmModel" class="form-label">Model</label>
+                            <select class="form-select" id="llmModel" disabled>
+                                <option value="">Select model...</option>
+                            </select>
+                            <div class="form-text">Model will be available after selecting provider</div>
+                        </div>
+
+                        <!-- Provider Status -->
+                        <div class="mb-3">
+                            <h6>Provider Status:</h6>
+                            <div id="providerStatus">
+                                {% for provider in providers %}
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span>{{ provider.name|title }}</span>
+                                    {% if provider.available %}
+                                    <span class="badge bg-success">Available</span>
+                                    {% else %}
+                                    <span class="badge bg-danger">Not Available</span>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Task Analysis Card -->
+                <div class="card mt-4" id="analysisCard" style="display: none;">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-chart-line me-2"></i>
+                            Task Analysis
+                        </h5>
+                    </div>
+                    <div class="card-body" id="analysisContent">
+                        <!-- Analysis content will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Interface -->
+            <div class="col-lg-8">
+                <!-- Task Input -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-edit me-2"></i>
+                            Task Description
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="taskInput" class="form-label">Describe your task in natural language:</label>
+                            <textarea class="form-control" id="taskInput" rows="4" 
+                                      placeholder="Example: Research the latest trends in AI and write a comprehensive report with market analysis and future predictions..."></textarea>
+                            <div class="form-text">Be specific about what you want to accomplish. The more detail you provide, the better the crew will be configured.</div>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-outline-secondary" id="analyzeBtn" disabled>
+                                <i class="fas fa-search me-2"></i>
+                                Analyze Task
+                            </button>
+                            <button class="btn btn-primary" id="processBtn" disabled>
+                                <i class="fas fa-play me-2"></i>
+                                Generate & Execute Crew
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Section -->
+                <div class="card" id="resultsCard" style="display: none;">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="fas fa-clipboard-check me-2"></i>
+                            Execution Results
+                        </h5>
+                        <div id="executionTime" class="text-muted small"></div>
+                    </div>
+                    <div class="card-body">
+                        <!-- Agents Section -->
+                        <div class="mb-4" id="agentsSection" style="display: none;">
+                            <h6>
+                                <i class="fas fa-users me-2"></i>
+                                Generated Agents
+                            </h6>
+                            <div id="agentsContent" class="row">
+                                <!-- Agents will be populated here -->
+                            </div>
+                        </div>
+
+                        <!-- Results Content -->
+                        <div class="mb-3">
+                            <h6>
+                                <i class="fas fa-file-alt me-2"></i>
+                                Final Output
+                            </h6>
+                            <div id="resultContent" class="border rounded p-3 bg-light">
+                                <!-- Results will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Loading Overlay -->
+                <div class="card loading-overlay" id="loadingOverlay" style="display: none;">
+                    <div class="card-body text-center py-5">
+                        <div class="spinner-border text-primary mb-3" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <h5>Processing Your Task...</h5>
+                        <p class="text-muted">Analyzing requirements, generating agents, and executing crew workflow</p>
+                        <div class="progress mt-3">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" id="progressBar" 
+                                 role="progressbar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="row mt-5 py-4 border-top">
+            <div class="col text-center text-muted">
+                <p class="mb-0">
+                    <i class="fas fa-code me-2"></i>
+                    Meta-Crew Spawner - Built with CrewAI Framework
+                </p>
+                <p class="small mb-0">
+                    Dynamic multi-agent AI crew generation for enterprise workflows
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

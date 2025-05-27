@@ -1,0 +1,262 @@
+/* Meta-Crew Spawner Custom Styles */
+
+:root {
+    --primary-color: 210 100% 56%; /* #1C7EF2 */
+    --primary-dark: 210 100% 46%; /* #0066CC */
+    --secondary-color: 140 100% 40%; /* #00CC66 */
+    --success-color: 120 100% 40%; /* #00CC00 */
+    --warning-color: 45 100% 50%; /* #FFB800 */
+    --danger-color: 0 100% 50%; /* #FF0033 */
+    --background-color: 210 11% 98%; /* #F5F7FA */
+    --surface-color: 0 0% 100%; /* #FFFFFF */
+    --text-primary: 210 22% 22%; /* #2D3748 */
+    --text-secondary: 210 11% 46%; /* #718096 */
+    --border-color: 210 11% 90%; /* #E2E8F0 */
+}
+
+body {
+    background-color: hsl(var(--background-color));
+    color: hsl(var(--text-primary));
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Header Styles */
+.bg-primary {
+    background: linear-gradient(135deg, hsl(var(--primary-color)), hsl(var(--primary-dark))) !important;
+}
+
+/* Card Enhancements */
+.card {
+    background-color: hsl(var(--surface-color));
+    border: 1px solid hsl(var(--border-color));
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    background-color: hsl(var(--background-color));
+    border-bottom: 1px solid hsl(var(--border-color));
+    font-weight: 600;
+}
+
+/* Form Controls */
+.form-control, .form-select {
+    border: 1px solid hsl(var(--border-color));
+    border-radius: 6px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: hsl(var(--primary-color));
+    box-shadow: 0 0 0 0.2rem hsla(var(--primary-color), 0.25);
+}
+
+/* Button Styles */
+.btn {
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, hsl(var(--primary-color)), hsl(var(--primary-dark)));
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, hsl(var(--primary-dark)), hsl(var(--primary-color)));
+    transform: translateY(-1px);
+}
+
+.btn-outline-secondary {
+    border-color: hsl(var(--border-color));
+    color: hsl(var(--text-secondary));
+}
+
+.btn-outline-secondary:hover {
+    background-color: hsl(var(--text-secondary));
+    border-color: hsl(var(--text-secondary));
+}
+
+/* Badge Styles */
+.badge {
+    font-weight: 500;
+    padding: 0.375rem 0.75rem;
+}
+
+.badge.bg-success {
+    background-color: hsl(var(--success-color)) !important;
+}
+
+.badge.bg-danger {
+    background-color: hsl(var(--danger-color)) !important;
+}
+
+.badge.bg-warning {
+    background-color: hsl(var(--warning-color)) !important;
+    color: hsl(var(--text-primary));
+}
+
+/* Loading Overlay */
+.loading-overlay {
+    position: relative;
+    background-color: hsla(var(--surface-color), 0.95);
+    backdrop-filter: blur(2px);
+}
+
+.spinner-border.text-primary {
+    color: hsl(var(--primary-color)) !important;
+}
+
+/* Progress Bar */
+.progress {
+    background-color: hsl(var(--border-color));
+    border-radius: 6px;
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, hsl(var(--primary-color)), hsl(var(--secondary-color)));
+}
+
+/* Agent Cards */
+.agent-card {
+    background-color: hsl(var(--surface-color));
+    border: 1px solid hsl(var(--border-color));
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.agent-card:hover {
+    border-color: hsl(var(--primary-color));
+    box-shadow: 0 2px 8px hsla(var(--primary-color), 0.2);
+}
+
+.agent-role {
+    color: hsl(var(--primary-color));
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.agent-goal {
+    color: hsl(var(--text-primary));
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.agent-backstory {
+    color: hsl(var(--text-secondary));
+    font-size: 0.85rem;
+    font-style: italic;
+}
+
+/* Results Content */
+#resultContent {
+    background-color: hsl(var(--background-color));
+    border: 1px solid hsl(var(--border-color));
+    border-radius: 6px;
+    max-height: 400px;
+    overflow-y: auto;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+
+/* Analysis Content */
+.analysis-item {
+    background-color: hsl(var(--background-color));
+    border: 1px solid hsl(var(--border-color));
+    border-radius: 6px;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.analysis-label {
+    font-weight: 600;
+    color: hsl(var(--primary-color));
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.25rem;
+}
+
+.analysis-value {
+    color: hsl(var(--text-primary));
+    font-size: 0.9rem;
+}
+
+/* Footer */
+footer {
+    background-color: hsl(var(--background-color));
+    border-top: 1px solid hsl(var(--border-color));
+    margin-top: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container-fluid {
+        padding: 0 15px;
+    }
+    
+    .card {
+        margin-bottom: 1rem;
+    }
+    
+    .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    .d-flex.gap-2 {
+        flex-direction: column;
+    }
+}
+
+/* Animation Classes */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Utility Classes */
+.text-muted-custom {
+    color: hsl(var(--text-secondary)) !important;
+}
+
+.border-custom {
+    border-color: hsl(var(--border-color)) !important;
+}
+
+.bg-light-custom {
+    background-color: hsl(var(--background-color)) !important;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: hsl(var(--background-color));
+}
+
+::-webkit-scrollbar-thumb {
+    background: hsl(var(--border-color));
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--text-secondary));
+}
